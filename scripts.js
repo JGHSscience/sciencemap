@@ -471,7 +471,7 @@ function renderState(state) {
 }
 
 function showWelcome() {
-    showContent('Welcome to the Laboratory Inventory', `<p>Select an area on the map to explore.</p>`);
+    showContent('Science Equipment Map', `<p>Select an area on the map to explore.</p>`);
     mapDiv.style.display = 'grid';
     navigationStack = [{ type: 'map' }];
     backBtn.disabled = true;
