@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory Inventory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
+</head>
+<body>
+
+    <div id="passwordGate" class="password-gate">
+        <div class="password-gate-card">
+            <h2>Laboratory Inventory</h2>
+            <p>Enter your name and the shared department password to continue.</p>
+            <form id="gateForm">
+                <div class="form-group">
+                    <label for="gateUsername">Your name:</label>
+                    <input type="text" id="gateUsername" autocomplete="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="gatePassword">Password:</label>
+                    <input type="password" id="gatePassword" autocomplete="current-password" required>
+                </div>
+                <p id="gateError" class="gate-error"></p>
+                <button type="submit">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="header">
+        <button id="backBtn" disabled>Back</button>
+        <span id="userGreeting" class="user-greeting"></span>
+        <span id="syncStatus" class="sync-status"></span>
+        <button id="signInBtn" class="hidden sign-in-btn">Sign in to sync</button>
+        <button id="switchUserBtn" class="switch-user-btn">Switch user</button>
+        <div class="header-right-buttons">
+            <button id="addEquipmentBtn">Add Equipment</button>
+            <button id="searchBtn">Look for equipment</button>
+            <button id="archiveBtn">Archive</button>
+            <button id="mapBtn">Map</button>
+        </div>
+        <div class="theme-menu-wrapper">
+            <button id="themeMenuBtn" class="hamburger-btn" aria-label="Theme options" aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div id="themeMenu" class="theme-menu hidden">
+                <p class="theme-menu-title">Theme</p>
+                <button class="theme-option" data-theme="light">☀️ Light</button>
+                <button class="theme-option" data-theme="dark">🌙 Dark</button>
+                <button class="theme-option" data-theme="gecko">🦎 Gecko</button>
+            </div>
+        </div>
+    </header>
+
+
+    <main id="container">
+
+        <section id="content-area">
+            <h2>Welcome to the Laboratory Inventory</h2>
+            <p>Select an area on the map to explore.</p>
+        </section>
+
+
+        <section id="map">
+            <div class="map-cell" id="lab1" data-area="Lab 1">Lab 1</div>
+            <div class="map-cell" id="lab2" data-area="Lab 2">Lab 2</div>
+            <div class="map-cell" id="lab3" data-area="Lab 3">Lab 3</div>
+            <div class="map-cell" id="lab4" data-area="Lab 4">Lab 4</div>
+            <div class="map-cell" id="lab5" data-area="Lab 5">Lab 5</div>
+            <div class="map-cell" id="lab6" data-area="Lab 6">Lab 6</div>
+            <div class="map-cell" id="lab7" data-area="Lab 7">Lab 7</div>
+            <div class="map-cell" id="lab8" data-area="Lab 8">Lab 8</div>
+            <div class="map-cell" id="lab9" data-area="Lab 9">Lab 9</div>
+            <div class="map-cell" id="lab10" data-area="Lab 10">Lab 10</div>
+            <div class="map-cell" id="preproom" data-area="Preproom">Preproom</div>
+            <div class="map-cell" id="greenhouse" data-area="Greenhouse">Greenhouse</div>
+            <div class="map-cell" id="bookstore" data-area="Bookstore">Bookstore</div>
+            <div class="map-cell" id="academy" data-area="Academy">Academy Lab</div>
+        </section>
+    </main>
+
+
+    <div id="addEquipmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddEquipmentModal">&times;</span>
+            <h3>Add New Equipment</h3>
+            <form id="addEquipmentForm">
+                <div class="form-group">
+                    <label for="selectLocation">Location:</label>
+                    <select id="selectLocation" required>
+                        <option value="">Select a location</option>
+                    </select>
+                </div>
+                <div id="dynamicContainer" class="form-group hidden">
+                    <label id="dynamicLabel" for="selectDynamic">Cabinet/Section:</label>
+                    <select id="selectDynamic">
+                        <option value="">Select an option</option>
+                    </select>
+                </div>
+                <div id="subDynamicContainer" class="form-group hidden">
+                    <label id="subDynamicLabel" for="selectSubDynamic">Column/Shelf:</label>
+                    <select id="selectSubDynamic">
+                        <option value="">Select an option</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="equipmentName">Equipment Name:</label>
+                    <input type="text" id="equipmentName" required>
+                </div>
+                <div class="form-group">
+                    <label for="equipmentQuantity">Quantity:</label>
+                    <input type="text" id="equipmentQuantity" required pattern="[0-9]+([a-zA-Z\s]+)?">
+                    <small>e.g., 50, 2 tubs, 5L, 1kg</small>
+                </div>
+                <button type="submit">Add Equipment</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirmModalTitle"></h3>
+            <p id="confirmModalMessage"></p>
+            <div class="modal-buttons">
+                <button id="confirmModalCancelBtn" class="danger-btn">Cancel</button>
+                <button id="confirmModalConfirmBtn" class="success-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
