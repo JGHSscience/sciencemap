@@ -34,14 +34,7 @@ const switchUserBtn = document.getElementById('switchUserBtn');
 const themeMenuBtn = document.getElementById('themeMenuBtn');
 const themeMenu = document.getElementById('themeMenu');
 
-// ----------------------------------------------------------------------------
-// THEMES
-// Every colour/radius/blur value in styles.css is read from a CSS variable,
-// so switching themes is just toggling a class on <body> - the variable
-// overrides in styles.css do the rest. Applied immediately (not waiting on
-// DOMContentLoaded) so a returning visitor doesn't see a flash of the wrong
-// theme before it kicks in.
-// ----------------------------------------------------------------------------
+
 const THEME_KEY = 'labInventoryTheme';
 const THEME_CLASSES = ['theme-dark', 'theme-gecko'];
 
@@ -58,14 +51,7 @@ function applyTheme(theme) {
 
 applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
-// ----------------------------------------------------------------------------
-// ACCESS GATE
-// A lightweight username + shared-password screen, not real security (the
-// password lives in this file, visible to anyone who views source) - it's a
-// soft deterrent to keep casual/accidental visitors out, not a substitute
-// for an actual login system. The Microsoft sign-in for shared-data sync is
-// the real access control on the data itself.
-// ----------------------------------------------------------------------------
+
 const GATE_PASSWORD = 'JGHSScience';
 const GATE_USER_KEY = 'labInventoryUser';
 const GATE_AUTHED_KEY = 'labInventoryAuthed';
@@ -102,17 +88,10 @@ function checkGate() {
     }
 }
 
-// ----------------------------------------------------------------------------
-// SHARED DATA CONFIG - Microsoft Graph / Excel Online
-// Fill these in from your Azure app registration and SharePoint site (see
-// the setup guide). Until you do, the app just runs with the built-in data
-// on this device only - nothing breaks, it just won't be shared.
-// ----------------------------------------------------------------------------
+
 const MSAL_CLIENT_ID = 'PASTE_YOUR_AZURE_APP_CLIENT_ID_HERE';
 const MSAL_TENANT_ID = 'PASTE_YOUR_AZURE_TENANT_ID_HERE';
-// Path Graph uses to find the shared workbook, built from your SharePoint site's
-// address. If your site is https://contoso.sharepoint.com/sites/ScienceDept,
-// that becomes hostname "contoso.sharepoint.com" and site name "ScienceDept" below.
+
 const GRAPH_SITE_HOSTNAME = 'PASTE_YOUR_SHAREPOINT_HOSTNAME_HERE';
 const GRAPH_SITE_NAME = 'PASTE_YOUR_SHAREPOINT_SITE_NAME_HERE';
 const GRAPH_FILE_PATH = 'LabInventory.xlsx'; // path to the file within that site's document library
@@ -246,8 +225,7 @@ let equipmentData = {
                     'Physics Column 19': [{ name: 'Morse code equipment', qty: 'None' }, { name: 'Morse code equipment', qty: 'None' }, { name: 'Buzzers, candles, rattling eggs etc', qty: 'None' }, { name: 'Slinkys', qty: 'None' }, { name: 'Sound meters', qty: 'None' }, { name: 'Sound meters, large', qty: 'None' }, { name: 'ear defenders', qty: 'None' }, { name: 'Loudspeaker making equipment', qty: 'None' }, { name: 'Brownian Motion apparatus', qty: 'None' }, { name: 'Wire cutters, 3 core cable', qty: 'None' }],
                     'Physics Column 20': [{ name: 'Series circuit boards', qty: 'None' }, { name: 'Parallel circuit boards', qty: 'None' }, { name: 'Electrical plugs', qty: 'None' }, { name: 'Screwdrivers, shake flashlight, hand generator torch', qty: 'None' }, { name: 'Electric motors', qty: 'None' }, { name: 'Fred model, Megger, conductivity experiment', qty: 'None' }, { name: 'Plug wiring kit', qty: 'None' }, { name: 'Appliances with faults', qty: 'None' }, { name: 'Appliances with faults', qty: 'None' }, { name: 'Brass terminals, panel pins, wire', qty: 'None' }],
                     'Physics Column 21': [{ name: 'Iron rods, leads, paper clips', qty: 'None' }, { name: 'Leads, electric motors', qty: 'None' }, { name: 'Electric motor kit', qty: 'None' }, { name: 'Electric motor kit', qty: 'None' }, { name: 'Electric motor kit', qty: 'None' }, { name: 'Mains ammeter, iron rods', qty: 'None' }, { name: 'Bells', qty: 'None' }, { name: 'Tray of electromagnetic equipment', qty: 'None' }, { name: '12V lamps – different wattages', qty: 'None' }, { name: 'Plotting compasses, reed switches, reed coils, conductor/insulator kits, paper clips, electromagnetic relay', qty: 'None' }, { name: 'Circuit breakers, fuse holders, metre lengths of wire', qty: 'None' }, { name: 'Elements with ratings', qty: 'None' }, { name: 'Electric motor', qty: 'None' }, { name: 'Sonometers', qty: 'None' }],
-                    'Next to Column 7': [{ name: 'Metre bridges', qty: 'None' }, { name: 'Bicycle pump', qty: 'None' }],
-                    'Big tub next to Column 16': [{ name: 'Cables, large, optical fibre', qty: 'None' }, { name: 'Free fall tube, Guinea and Feather apparatus', qty: 'None' }, { name: 'Optical benches', qty: 'None' }, { name: 'Rocket launcher', qty: 'None' }, { name: 'Stands for Monkey and Hunter experiment', qty: 'None' }, { name: 'Sulfuric Acid (conc)', qty: 'None' }]
+                   
                 }
             },
             'Chemical Store': {
@@ -275,15 +253,7 @@ let standardGeneralLabware = [{ name: '250ml Beakers', qty: 10 }, { name: '100ml
 
 let archivedEquipment = [];
 
-// ----------------------------------------------------------------------------
-// SHARED EXCEL ONLINE SYNC (Microsoft Graph)
-// The whole inventory travels as one JSON blob in cell A1 of the
-// "InventoryData" worksheet in a shared Excel file on your SharePoint site.
-// Each person signs in with their own Microsoft account (Files.ReadWrite),
-// then reads/writes that cell directly via the Graph API - no middle-man
-// server needed. See the setup guide for how to register the Azure app and
-// point GRAPH_SITE_HOSTNAME/GRAPH_SITE_NAME at your file.
-// ----------------------------------------------------------------------------
+
 
 function setSyncStatus(text, isError = false) {
     if (!syncStatus) return;
@@ -302,9 +272,7 @@ function applySharedData(data) {
     standardGeneralLabware = data.standardGeneralLabware || standardGeneralLabware;
 }
 
-// Only ever called from a real button click (see signInBtn handler below) -
-// loginPopup must run in direct response to a user gesture or the browser
-// will block the popup.
+
 async function ensureSignedIn() {
     try {
         const result = await msalInstance.loginPopup({ scopes: GRAPH_SCOPES });
@@ -317,9 +285,7 @@ async function ensureSignedIn() {
     }
 }
 
-// Silent-only token fetch, safe to call from background code (polling, auto-save).
-// Never opens a popup itself - if the cached session is gone, it asks the
-// person to click "Sign in" again rather than surprising them with a popup.
+
 async function getGraphToken() {
     if (!SYNC_CONFIGURED) return null;
     const account = msalInstance.getActiveAccount() || msalInstance.getAllAccounts()[0];
@@ -354,7 +320,7 @@ async function loadFromSheet() {
             lastSyncedSnapshot = currentDataSnapshot();
             setSyncStatus('Synced ✓');
         } else {
-            // Sheet cell is empty - first person to sign in seeds it with the built-in defaults.
+           
             await saveToSheet();
         }
     } catch (err) {
@@ -394,7 +360,7 @@ function scheduleSave() {
 function startPolling() {
     if (!SYNC_CONFIGURED) return;
     setInterval(async () => {
-        // Don't yank data out from under someone mid-edit.
+        
         if (confirmModal.style.display === 'flex' || addEquipmentModal.style.display === 'flex') return;
         const token = await getGraphToken();
         if (!token) return;
@@ -414,14 +380,12 @@ function startPolling() {
                 setSyncStatus('Updated by a teammate');
             }
         } catch (err) {
-            // Stay quiet on background poll failures.
+            
         }
     }, POLL_INTERVAL_MS);
 }
 
-// Called once on page load. If MSAL already has a cached account (returning
-// visitor), sync starts immediately with no popup needed. Otherwise the
-// "Sign in to sync" button stays visible until clicked.
+
 function initSync() {
     if (!SYNC_CONFIGURED) {
         setSyncStatus('Local only (sharing not set up)');
@@ -645,7 +609,7 @@ function showCabinet(parentType, mainAreaName, cabinetName) {
 function showShelf(parent, subArea, shelfName) {
     pushState({ type: 'shelf', parent: parent, subArea: subArea, shelfName: shelfName });
 
-    // "Shelves" is a category, not an item list - render buttons for the nested shelves it contains
+    
     if (shelfName === 'Shelves') {
         const shelvesData = equipmentData[parent]?.subcategories?.[subArea]?.Shelves;
         let html = '<h3>Shelves:</h3><div class="cabinet-buttons">';
@@ -667,7 +631,7 @@ function showShelf(parent, subArea, shelfName) {
         itemType = 'shelf';
         path = [parent, 'subcategories', subArea, shelfName];
     } else {
-        // A nested shelf living inside the "Shelves" category (e.g. "Main Shelf 1")
+        
         items = equipmentData[parent]?.subcategories?.[subArea]?.Shelves?.[shelfName];
         title = `${parent} - ${subArea} - Shelves - ${shelfName}`;
         itemType = 'nestedShelf';
@@ -872,9 +836,7 @@ function updateQuantity(item, valueOrDelta, isDirectValue = false) {
     }
 }
 
-// Walks a comma/array path of literal object keys down into equipmentData
-// (e.g. ['Lab 1','cabinets','Cupboard A'] or ['Preproom','subcategories','Chemistry','cabinets','Chemistry Column 01'])
-// and returns the array found there, or null if the path doesn't resolve to an array.
+
 function getItemListFromPath(path) {
     if (path[0] === 'standardBasic') {
         return standardBasicEquipment;
@@ -894,8 +856,7 @@ function getItemListFromPath(path) {
     return Array.isArray(currentLevel) ? currentLevel : null;
 }
 
-// Single source of truth for "give me the list an item lives in", used by both
-// read (getItemFromData) and write (findAndManipulateItem) operations so they can't drift apart.
+
 function resolveList(itemType, path) {
     return itemType === 'archived' ? archivedEquipment : getItemListFromPath(path);
 }
