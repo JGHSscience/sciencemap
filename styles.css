@@ -815,14 +815,6 @@ body {
   color: #fff;
 }
 
-/* ============================================================
-   DARK THEME
-   Every rule in this file reads colours/radius/blur from CSS
-   variables, so redefining them here re-skins the whole app
-   without touching component rules. Only the couple of places
-   that hardcode a gradient (body, .password-gate) need their
-   own override below.
-   ============================================================ */
 
 body.theme-dark {
   --color-bg: #10151a;
@@ -855,46 +847,44 @@ body.theme-dark ::selection {
   background: rgba(79, 209, 197, 0.3);
 }
 
-/* ============================================================
-   GECKO THEME
-   Chunky pixel-art look: hard edges, flat colours, a bitmap
-   font, no blur/soft shadows, and a tiny gecko as the cursor.
-   ============================================================ */
 
 body.theme-gecko {
-  --color-bg: #9bbc0f;
-  --color-surface: #d3ecb0;
-  --color-surface-strong: #e2f4c8;
-  --color-primary: #0f380f;
-  --color-primary-dark: #071a07;
-  --color-primary-light: #b8d888;
-  --color-accent: #d97706;
-  --color-danger: #b91c1c;
-  --color-danger-dark: #7f1414;
-  --color-success: #15803d;
-  --color-success-dark: #0f5c2c;
-  --color-text: #0f380f;
-  --color-text-muted: #306230;
-  --color-border: #0f380f;
+
+  --color-bg: #6a9b37;
+  --color-surface: #fdf1d6;
+  --color-surface-strong: #fff8e8;
+  --color-primary: #5c3a21;
+  --color-primary-dark: #3e2414;
+  --color-primary-light: #e8c896;
+  --color-accent: #e8a33d;
+  --color-danger: #a13d2f;
+  --color-danger-dark: #7a2c22;
+  --color-success: #4a7c3a;
+  --color-success-dark: #35602a;
+  --color-text: #3e2414;
+  --color-text-muted: #7a5738;
+  --color-border: #5c3a21;
   --radius: 0px;
   --radius-pill: 0px;
-  --shadow: 4px 4px 0 #0f380f;
-  --shadow-lg: 6px 6px 0 #0f380f;
+  --shadow: 4px 4px 0 #3e2414;
+  --shadow-lg: 6px 6px 0 #3e2414;
   --blur: none;
   --blur-sm: none;
 
-  background: #9bbc0f;
+  background: #6a9b37;
   animation: none;
   font-family: 'VT323', 'Courier New', monospace;
   font-size: 1.1rem;
 }
 
 body.theme-gecko, body.theme-gecko * {
-  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAYAAABU1PscAAAA20lEQVR4nO2XQQ6DIBBFv01P4jE4QdesOR5rjuExvEq7+olOh4ANkULmrYw6iPMUZgDDMIyeLFcD1rC+AWCP++XYlnAej56TaMGzdAPflLjgeHg6L43IOBm/xU19Xq1ZjjOvAWbwkPETyvmcqdp4dZyS2XkNSJJPAACfvHq9lPFaas3GV1yACQx8/fGlb/8u5ColM0/mM0D+xQSRmSfDG6hehXqR27HJvAYOO6C6DudWibuZ1wBRqkO1H3DBqdXnr9BwqTod3kCzripX/0tK/QCp7QuGN2AYhtGXD8XoTc2XlP3WAAAAAElFTkSuQmCC') 10 12, auto !important;
+  /* Leopard gecko: cream body, black + rust leopard spotting,
+     banded tail, chunky pixel-art style to match the theme. */
+  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAeCAYAAABqpJ3BAAAB9UlEQVR4nO2XvWqDUBTHjyGUQig4djFdXLI0e8XBTQh06WgeobvkCYJ76RPERxDcHILd0zlTfIEszrdDcuR4PVdNYmhT/EHger3enP/5ugrQ09PT03MBWlcb2aYu1tu9cj/b1EXTHnXPqzjpgTyLWCM2waIYT/1lMXYdrxgH7phdg4yMmdbkBI7BKYv/IkNusi7cljWvzH2+Gor7B2em6aqIBo0E5ev9+fifY+HHu9bpVBFgm7qIk5BdfDDivLJBw6f+spRaaKht6gLXxEkIruMJel9FcRO9jsa7jgdUCOd5JE1XtetohKgIzjjZgSNjVitgyHn8afLGigAAeLgTFWGWNS9EUGOxWGmRN3EU1dixkMF6u9dGxkxzHa8I7eTxHgCgZGiarkqe5pANxWvadXAcJ6Gy1lzHg02waCX8f3YhVRFfAtf7VQTuGPx412otW0QAVRGYXk3iVIeaDO4nF3KeRUJV4Bytj/4uo3KKgU203gS7FdeZ6qA9n9KVALYGOOTeLKcapg7mLs7TgwrnVaLO4ea70MkC0KNxEpZObQCAl4/vUlqoPH2NLqckzyKRZ5GwTV3g6zSO8cetx2fk/eg+XdA6AvUveAdkg2mh2qZeEtTmA+dqUC9Tb9LIyAbS+S6j0NknJUD1i63pTbILbr4L9fw2P2/XJZy5fmCSAAAAAElFTkSuQmCC') 4 4, auto !important;
 }
 
 body.theme-gecko .password-gate {
-  background: #9bbc0f;
+  background: #6a9b37;
   animation: none;
 }
 
@@ -950,7 +940,7 @@ body.theme-gecko .form-group input,
 body.theme-gecko .search-container input {
   border-width: 2px !important;
   border-style: solid !important;
-  border-color: #0f380f !important;
+  border-color: #5c3a21 !important;
 }
 
 body.theme-gecko .map-cell:hover,
@@ -961,11 +951,11 @@ body.theme-gecko .equipment-item:hover {
 }
 
 body.theme-gecko ::-webkit-scrollbar-thumb {
-  background: #0f380f;
+  background: #5c3a21;
   border-radius: 0;
 }
 
 body.theme-gecko ::-webkit-scrollbar-track {
-  background: #b8d888;
+  background: #e8c896;
   border-radius: 0;
 }
